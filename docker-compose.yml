@@ -1,0 +1,14 @@
+web:
+  build: .
+  command: bundle exec rackup --host 0.0.0.0 -p 3000
+  volumes:
+    - .:/usr/src/app
+  volumes_from:
+    - bundle
+  ports:
+    - "3000:3000"
+
+bundle:
+  image: busybox
+  volumes:
+    - /bundle
