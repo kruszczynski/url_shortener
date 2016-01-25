@@ -19,3 +19,7 @@ Api will go here
 Make sure port 3000 is being forwarded from docker machine to your machine.
 
 ### Specs and linters
+
+### my help
+
+chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:?#[]@!$&'()*+,;="
