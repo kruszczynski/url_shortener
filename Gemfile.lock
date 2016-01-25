@@ -22,6 +22,8 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
+    rack-test (0.6.3)
+      rack (>= 1.0)
     rainbow (2.1.0)
     reek (3.9.1)
       codeclimate-engine-rb (~> 0.1.0)
@@ -63,6 +65,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rack-test
   reek
   rspec
   rubocop

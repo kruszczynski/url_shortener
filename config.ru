@@ -1,5 +1,5 @@
-require "bundler"
+require 'bundler'
 Bundler.setup
 
-require './myapp'
-run MyApp
+require './url-shortener/app'
+run UrlShortener::App
