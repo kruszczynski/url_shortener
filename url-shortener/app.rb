@@ -12,8 +12,9 @@ module UrlShortener
 
     post '/shorten' do
       param :url, String, required: true
-      link = Storage::Basic.save(params['url'])
-      json slug: link.slug
+      param :custom_slug, String
+      link = Storage::Basic.save(params['url'], params['custom_slug'])
+      json slug: link.custom_slug || link.slug
     end
 
     # # debugging index page
