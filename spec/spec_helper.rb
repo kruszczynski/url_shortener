@@ -1,6 +1,8 @@
 require 'bundler'
 Bundler.setup
 
+# necessary for testing of couchrest without sinatra required
+require 'yaml'
 require 'rack/test'
 require 'rspec'
 
@@ -18,7 +20,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    UrlShortener::Storage::Basic.class_variable_set(:@@data, [])
+    # we want a clean database before every test
+    UrlShortener::Link.all.map(&:destroy)
   end
 
   config.order = :random

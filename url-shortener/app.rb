@@ -4,6 +4,8 @@ require 'sinatra/config_file'
 
 require 'sinatra/param'
 
+require './url-shortener/models/link'
+
 require './url-shortener/actions/shorten'
 require './url-shortener/actions/get'
 

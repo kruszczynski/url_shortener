@@ -1,10 +1,11 @@
-require './url-shortener/storage/basic'
+require './url-shortener/models/link'
 
 module UrlShortener
   module Actions
     class Shorten
       def self.call(url, custom_slug = nil)
-        link = Storage::Basic.save(url, custom_slug)
+        link = Link.new(url: url, custom_slug: custom_slug)
+        link.save
         link.custom_slug || link.slug
       end
     end # class Shorten

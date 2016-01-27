@@ -1,22 +1,26 @@
 require 'spec_helper'
 
-require './url-shortener/storage/link'
+require './url-shortener/models/link'
 require './url-shortener/actions/get'
 
-describe UrlShortener::Actions::Get do
-  subject { UrlShortener::Actions::Get.call(slug) }
-  let(:slug) { 'slug' }
-  let(:link) do
-    UrlShortener::Storage::Link.new(slug, 'https://www.youtube.com', nil)
-  end
+module UrlShortener
+  describe Actions::Get do
+    subject { Actions::Get.call(slug) }
 
-  describe '.call' do
-    it 'finds the link' do
-      expect(UrlShortener::Storage::Basic)
-        .to receive(:find)
-        .with(slug)
-        .and_return(link)
-      expect(subject).to eq(link)
-    end
-  end # describe '.call'
-end # describe UrlShortener::Actions::Get
+    let(:slug) { '5' }
+    let(:url) { 'https://www.shopify.com' }
+    let(:custom_slug) { 'marketing_is_great' }
+    let(:params) { {url: url, custom_slug: custom_slug, slug: slug} }
+    let(:link) { double('Link', params) }
+
+    describe '.call' do
+      it 'finds the link' do
+        expect(Link)
+          .to receive(:by_slug)
+          .with(keys: [slug])
+          .and_return(double(first: link))
+        expect(subject).to eq(link)
+      end
+    end # describe '.call'
+  end # describe UrlShortener::Actions::Get
+end # module UrlShortener
