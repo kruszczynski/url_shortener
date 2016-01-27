@@ -1,8 +1,10 @@
 require 'spec_helper'
+
 require './url-shortener/app'
 
 RSpec.describe UrlShortener::App do
   include Rack::Test::Methods
+
   def app
     UrlShortener::App
   end
@@ -49,7 +51,7 @@ RSpec.describe UrlShortener::App do
     shared_examples_for 'link creator' do |expected_slug|
       it 'adds a link to storage' do
         expect { post '/shorten', params }
-          .to change(UrlShortener::Storage::Basic.data, :size).by(1)
+          .to change { UrlShortener::Storage::Basic.data.size }.by(1)
       end
 
       it 'returns a json with slug' do

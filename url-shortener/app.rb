@@ -1,30 +1,31 @@
 require 'sinatra'
 require 'sinatra/json'
+require 'sinatra/config_file'
+
 require 'sinatra/param'
 
-require './url-shortener/storage/basic'
+require './url-shortener/actions/shorten'
+require './url-shortener/actions/get'
 
 module UrlShortener
   class App < Sinatra::Base
     helpers Sinatra::Param
+
+    register Sinatra::ConfigFile
+
+    config_file 'path/to/config.yml'
 
     enable :logging
 
     post '/shorten' do
       param :url, String, required: true
       param :custom_slug, String
-      link = Storage::Basic.save(params['url'], params['custom_slug'])
-      json slug: link.custom_slug || link.slug
+      json slug: Actions::Shorten.call(params['url'], params['custom_slug'])
     end
-
-    # # debugging index page
-    # get '/all' do
-    #   json Storage::Basic.data
-    # end
 
     get '/:slug' do
       param :slug, String, required: true
-      result = Storage::Basic.find(params['slug'])
+      result = Actions::Get.call(params['slug'])
       if result
         redirect result.url, 301
       else

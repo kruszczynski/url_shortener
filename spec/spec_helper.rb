@@ -3,7 +3,6 @@ Bundler.setup
 
 require 'rack/test'
 require 'rspec'
-require './url-shortener/storage/basic'
 
 # The `.rspec` file also contains a few flags that are not defaults but that
 # users commonly want.
