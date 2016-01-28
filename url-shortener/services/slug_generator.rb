@@ -26,5 +26,5 @@ module UrlShortener
     end
 
     private_class_method :base_80_array
-  end
+  end # class SlugGenerator
 end # module UrlShortener

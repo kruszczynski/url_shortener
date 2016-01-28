@@ -25,18 +25,23 @@ module UrlShortener
 
       context 'auto generated slugs' do
         before do
-          Link.new(url: 'https://www.google.com').save
-          Link.new(url: 'https://www.facebook.com').save
-          Link.new(url: 'http://www.kruszczynski.net').save
-          Link.new(url: 'https://www.shopify.com').save
-          Link.new(url: 'https://www.github.com').save
+          Link.new(
+            url: 'https://www.google.com', slug_number: 80, slug: 'BA').save
+          Link.new(
+            url: 'https://www.facebook.com', slug_number: 81, slug: 'BB').save
+          Link.new(
+            url: 'https://www.twitter.com', slug_number: 159, slug: 'B=').save
+          Link.new(
+            url: 'https://www.shopify.com', slug_number: 161, slug: 'CB').save
+          Link.new(
+            url: 'https://www.github.com', slug_number: 6399, slug: '==').save
         end
 
-        it_behaves_like 'redirects', '0', 'https://www.google.com'
-        it_behaves_like 'redirects', '1', 'https://www.facebook.com'
-        it_behaves_like 'redirects', '2', 'http://www.kruszczynski.net'
-        it_behaves_like 'redirects', '3', 'https://www.shopify.com'
-        it_behaves_like 'redirects', '4', 'https://www.github.com'
+        it_behaves_like 'redirects', 'BA', 'https://www.google.com'
+        it_behaves_like 'redirects', 'BB', 'https://www.facebook.com'
+        it_behaves_like 'redirects', 'B=', 'https://www.twitter.com'
+        it_behaves_like 'redirects', 'CB', 'https://www.shopify.com'
+        it_behaves_like 'redirects', '==', 'https://www.github.com'
 
         it 'returns a 404 for not existing slug' do
           get '/fightforyourrighttoparty'
@@ -49,7 +54,11 @@ module UrlShortener
     end # describe 'GET to /:slug'
 
     describe 'POST to /shorten' do
-      shared_examples_for 'link creator' do |expected_slug|
+      shared_examples_for 'link_creator' do |expected_slug|
+        before do
+          allow(SlugNumber).to receive(:latest) { 80 }
+        end
+
         it 'adds a link to storage' do
           expect { post '/shorten', params }
             .to change { Link.count }.by(1)
@@ -65,13 +74,13 @@ module UrlShortener
       context 'auto generated slug' do
         let(:params) { {url: 'https://www.youtube.com'} }
 
-        it_behaves_like 'link creator', '0'
+        it_behaves_like 'link_creator', 'BA'
       end
 
       context 'custom slugs' do
         let(:params) { {url: 'https://www.youtube.com', custom_slug: 'party'} }
 
-        it_behaves_like 'link creator', 'party'
+        it_behaves_like 'link_creator', 'party'
       end
     end # describe 'POST to /shorten'
   end # describe App

@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-require './url-shortener/models/link'
 require './url-shortener/actions/get'
 
 module UrlShortener

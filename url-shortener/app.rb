@@ -13,9 +13,9 @@ module UrlShortener
   class App < Sinatra::Base
     helpers Sinatra::Param
 
-    register Sinatra::ConfigFile
+    # register Sinatra::ConfigFile
 
-    config_file 'path/to/config.yml'
+    # config_file 'path/to/config.yml'
 
     enable :logging
 
