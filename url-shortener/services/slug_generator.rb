@@ -1,0 +1,30 @@
+module UrlShortener
+  class SlugGenerator
+    # Yes, it's 10 chars per row
+    URL_CHARACTERS = 'ABCDEFGHIJ'\
+                     'KLMNOPQRST'\
+                     'UVWXYZabcd'\
+                     'efghijklmn'\
+                     'opqrstuvwx'\
+                     'yz01234567'\
+                     '89-._~:[]@'\
+                     "!$'()*+,;=".freeze
+
+    def self.generate(number)
+      base_80_array(number).map { |element| URL_CHARACTERS[element] }.join('')
+    end
+
+    def self.base_80_array(number)
+      return [0] if number == 0
+      [].tap do |array|
+        base = URL_CHARACTERS.size
+        while number > 0
+          array.unshift(number % base)
+          number /= base
+        end
+      end
+    end
+
+    private_class_method :base_80_array
+  end
+end # module UrlShortener
