@@ -21,17 +21,6 @@ module UrlShortener
 
     enable :logging
 
-    post '/shorten' do
-      param :url, String, required: true
-      param :custom_slug, String
-      link = Actions::Shorten.new(params['url'], params['custom_slug']).call
-      if link
-        json slug: link.returnable_slug
-      else
-        halt 422, json('Redirect not created, custom_slug taken')
-      end
-    end
-
     get '/:slug' do
       param :slug, String, required: true
       result = Actions::Get.new(params['slug']).call
@@ -39,6 +28,17 @@ module UrlShortener
         redirect result.url, 301
       else
         halt 404
+      end
+    end
+
+    post '/shorten' do
+      param :url, String, required: true
+      param :slug, String
+      link = Actions::Shorten.new(params['url'], params['slug']).call
+      if link
+        json slug: link.returnable_slug
+      else
+        halt 422, json('Redirect not created, custom_slug taken')
       end
     end
   end # class App

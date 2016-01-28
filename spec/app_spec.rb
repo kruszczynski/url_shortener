@@ -103,7 +103,7 @@ module UrlShortener
       context 'custom slugs' do
         let(:url) { 'https://www.youtube.com' }
         let(:custom_slug) { 'party' }
-        let(:params) { {url: url, custom_slug: custom_slug} }
+        let(:params) { {url: url, slug: custom_slug} }
 
         it_behaves_like 'link_creator', 'party'
 
