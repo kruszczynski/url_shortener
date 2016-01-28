@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UrlShortener
   class SlugGenerator
     # Yes, it's 10 chars per row

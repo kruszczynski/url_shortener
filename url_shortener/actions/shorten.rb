@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './url_shortener/models/link'
 require './url_shortener/services/slug_generator'
 require './url_shortener/services/slug_number'
