@@ -51,8 +51,7 @@ module UrlShortener
         end
       end # context 'auto generated slugs'
 
-      context 'custom slugs' do
-      end
+      context 'custom slugs'
     end # describe 'GET to /:slug'
 
     describe 'POST to /shorten' do
@@ -80,9 +79,27 @@ module UrlShortener
       end
 
       context 'custom slugs' do
-        let(:params) { {url: 'https://www.youtube.com', custom_slug: 'party'} }
+        let(:url) { 'https://www.youtube.com' }
+        let(:custom_slug) { 'party' }
+        let(:params) { {url: url, custom_slug: custom_slug} }
 
         it_behaves_like 'link_creator', 'party'
+
+        context 'with slug taken' do
+          before do
+            Actions::Shorten.call(url, custom_slug)
+          end
+
+          it 'does not create a link' do
+            expect { post '/shorten', params }
+              .to_not change { Link.count }
+          end
+
+          it 'returns status 422' do
+            post '/shorten', params
+            expect(last_response.status).to eq(422)
+          end
+        end
       end
     end # describe 'POST to /shorten'
   end # describe App

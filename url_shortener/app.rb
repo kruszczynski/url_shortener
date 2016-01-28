@@ -24,7 +24,12 @@ module UrlShortener
     post '/shorten' do
       param :url, String, required: true
       param :custom_slug, String
-      json slug: Actions::Shorten.call(params['url'], params['custom_slug'])
+      link = Actions::Shorten.call(params['url'], params['custom_slug'])
+      if link
+        json slug: link.returnable_slug
+      else
+        halt 422, json('Redirect not created, custom_slug taken')
+      end
     end
 
     get '/:slug' do

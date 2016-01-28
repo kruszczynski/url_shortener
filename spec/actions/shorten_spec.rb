@@ -18,7 +18,7 @@ module UrlShortener
     let(:link) { double('Link', link_params) }
 
     describe '.call' do
-      it 'returns slug' do
+      it 'returns slug when successful' do
         expect(SlugNumber).to receive(:latest) { slug_number }
         expect(SlugGenerator).to receive(:generate).with(slug_number) { slug }
         expect(Link)
@@ -26,8 +26,20 @@ module UrlShortener
           .with(link_params)
           .and_return(link)
         expect(link).to receive(:save)
-        expect(link).to receive(:returnable_slug) { custom_slug }
-        expect(subject).to eq(custom_slug)
+        expect(link).to receive(:persisted?) { true }
+        expect(subject).to eq(link)
+      end
+
+      it 'returns false when not' do
+        expect(SlugNumber).to receive(:latest) { slug_number }
+        expect(SlugGenerator).to receive(:generate).with(slug_number) { slug }
+        expect(Link)
+          .to receive(:new)
+          .with(link_params)
+          .and_return(link)
+        expect(link).to receive(:save)
+        expect(link).to receive(:persisted?) { false }
+        expect(subject).to be_falsey
       end
     end
   end # describe UrlShortener::Actions::Shorten

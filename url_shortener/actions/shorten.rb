@@ -14,7 +14,7 @@ module UrlShortener
                         slug: SlugGenerator.generate(slug_number),
                         slug_number: slug_number)
         link.save
-        link.returnable_slug
+        link.persisted? && link
       end
     end # class Shorten
   end # module Actions

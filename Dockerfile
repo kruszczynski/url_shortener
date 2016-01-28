@@ -1,7 +1,7 @@
 FROM ruby:2.3.0-slim
 
 # deps
-RUN apt-get update -qq && apt-get install -y build-essential
+RUN apt-get update -qq && apt-get install -y build-essential git
 
 # set bundle data volume path
 ENV BUNDLE_PATH=/bundle
