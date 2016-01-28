@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-require './url-shortener/actions/shorten'
+require './url_shortener/actions/shorten'
 
 module UrlShortener
   describe Actions::Shorten do

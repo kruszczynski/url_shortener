@@ -1,4 +1,4 @@
-require './url-shortener/models/link'
+require './url_shortener/models/link'
 
 module UrlShortener
   module Actions

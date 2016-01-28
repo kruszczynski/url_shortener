@@ -5,7 +5,7 @@ Bundler.setup
 require 'yaml'
 require 'rack/test'
 require 'rspec'
-require './url-shortener/models/link'
+require './url_shortener/models/link'
 
 # The `.rspec` file also contains a few flags that are not defaults but that
 # users commonly want.

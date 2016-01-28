@@ -1,6 +1,6 @@
-require './url-shortener/models/link'
-require './url-shortener/services/slug_generator'
-require './url-shortener/services/slug_number'
+require './url_shortener/models/link'
+require './url_shortener/services/slug_generator'
+require './url_shortener/services/slug_number'
 
 module UrlShortener
   module Actions

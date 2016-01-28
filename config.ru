@@ -1,5 +1,5 @@
 require 'bundler'
 Bundler.setup
 
-require './url-shortener/app'
+require './url_shortener/app'
 run UrlShortener::App
