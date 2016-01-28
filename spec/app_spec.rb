@@ -109,7 +109,7 @@ module UrlShortener
 
         context 'with slug taken' do
           before do
-            Actions::Shorten.call(url, custom_slug)
+            Actions::Shorten.new(url, custom_slug).call
           end
 
           it 'does not create a link' do

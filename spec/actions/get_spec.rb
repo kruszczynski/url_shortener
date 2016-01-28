@@ -11,7 +11,7 @@ module UrlShortener
     let(:slug) { 'B=' }
     let(:link) { double('Link') }
 
-    describe '.call' do
+    describe '#call' do
       it 'finds the link' do
         expect(Link)
           .to receive(:find_by_both_slugs)

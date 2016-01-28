@@ -7,10 +7,15 @@ require './url_shortener/services/slug_number'
 module UrlShortener
   module Actions
     class Shorten
-      def self.call(url, custom_slug = nil)
+      def initialize(url, custom_slug = nil)
+        @url = url
+        @custom_slug = custom_slug
+      end
+
+      def call
         slug_number = SlugNumber.latest
-        link = Link.new(url: url,
-                        custom_slug: custom_slug,
+        link = Link.new(url: @url,
+                        custom_slug: @custom_slug,
                         slug: SlugGenerator.generate(slug_number),
                         slug_number: slug_number)
         link.save
