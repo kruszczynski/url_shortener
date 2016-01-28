@@ -6,21 +6,18 @@ require './url_shortener/actions/get'
 
 module UrlShortener
   describe Actions::Get do
-    subject { Actions::Get.call(slug) }
+    subject { Actions::Get.new(slug) }
 
-    let(:slug) { '5' }
-    let(:url) { 'https://www.shopify.com' }
-    let(:custom_slug) { 'marketing_is_great' }
-    let(:params) { {url: url, custom_slug: custom_slug, slug: slug} }
-    let(:link) { double('Link', params) }
+    let(:slug) { 'B=' }
+    let(:link) { double('Link') }
 
     describe '.call' do
       it 'finds the link' do
         expect(Link)
-          .to receive(:by_slug)
-          .with(keys: [slug])
-          .and_return(double(first: link))
-        expect(subject).to eq(link)
+          .to receive(:find_by_both_slugs)
+          .with(slug)
+          .and_return(link)
+        expect(subject.call).to eq(link)
       end
     end # describe '.call'
   end # describe UrlShortener::Actions::Get

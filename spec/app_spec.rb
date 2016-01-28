@@ -13,6 +13,10 @@ module UrlShortener
     end
 
     describe 'GET to /:slug' do
+      before do
+        test_data.each { |link_params| Link.new(link_params).save }
+      end
+
       shared_examples_for 'redirects' do |slug, url|
         it 'is a redirect with 301 status' do
           get "/#{slug}"
@@ -26,17 +30,14 @@ module UrlShortener
       end
 
       context 'auto generated slugs' do
-        before do
-          Link.new(
-            url: 'https://www.google.com', slug_number: 80, slug: 'BA').save
-          Link.new(
-            url: 'https://www.facebook.com', slug_number: 81, slug: 'BB').save
-          Link.new(
-            url: 'https://www.twitter.com', slug_number: 159, slug: 'B=').save
-          Link.new(
-            url: 'https://www.shopify.com', slug_number: 161, slug: 'CB').save
-          Link.new(
-            url: 'https://www.github.com', slug_number: 6399, slug: '==').save
+        let(:test_data) do
+          [
+            {url: 'https://www.google.com', slug_number: 80, slug: 'BA'},
+            {url: 'https://www.facebook.com', slug_number: 81, slug: 'BB'},
+            {url: 'https://www.twitter.com', slug_number: 159, slug: 'B='},
+            {url: 'https://www.shopify.com', slug_number: 161, slug: 'CB'},
+            {url: 'https://www.github.com', slug_number: 6399, slug: '=='},
+          ]
         end
 
         it_behaves_like 'redirects', 'BA', 'https://www.google.com'
@@ -51,7 +52,28 @@ module UrlShortener
         end
       end # context 'auto generated slugs'
 
-      context 'custom slugs'
+      context 'custom slugs' do
+        let(:test_data) do
+          [
+            {url: 'https://bit.ly', slug_number: 80,
+             slug: 'BA', custom_slug: 'bitly'},
+            {url: 'https://goo.gl', slug_number: 81,
+             slug: 'BB', custom_slug: 'googl'},
+            {url: 'https://www.twitter.com', slug_number: 159,
+             slug: 'B=', custom_slug: 'twitter_fitter'},
+            {url: 'https://www.shopify.com', slug_number: 161,
+             slug: 'CB', custom_slug: 'buy_stuff_here'},
+            {url: 'https://www.github.com', slug_number: 6399,
+             slug: '==', custom_slug: 'code_code_code'},
+          ]
+        end
+
+        it_behaves_like 'redirects', 'bitly', 'https://bit.ly'
+        it_behaves_like 'redirects', 'googl', 'https://goo.gl'
+        it_behaves_like 'redirects', 'twitter_fitter', 'https://www.twitter.com'
+        it_behaves_like 'redirects', 'buy_stuff_here', 'https://www.shopify.com'
+        it_behaves_like 'redirects', 'code_code_code', 'https://www.github.com'
+      end # context 'custom slugs'
     end # describe 'GET to /:slug'
 
     describe 'POST to /shorten' do

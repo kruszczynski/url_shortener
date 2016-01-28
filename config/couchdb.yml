@@ -3,4 +3,4 @@ development:
   prefix: url_shortener
 test:
   host: db
-  perfix: url_shortener_test
+  prefix: url_shortener_test

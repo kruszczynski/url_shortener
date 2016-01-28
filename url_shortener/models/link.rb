@@ -20,6 +20,10 @@ module UrlShortener
       view :by_custom_slug
     end
 
+    def self.find_by_both_slugs(slug)
+      find_by_slug(slug) || find_by_custom_slug(slug)
+    end
+
     def returnable_slug
       custom_slug || slug
     end

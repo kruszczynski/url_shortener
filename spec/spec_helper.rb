@@ -14,6 +14,12 @@ require './url_shortener/models/link'
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  # since couchrest's configuration is strongly Rails-biased
+  # This has to be set manually here
+  CouchRest::Model::Base.configure do |couchrest_config|
+    couchrest_config.environment = :test
+  end
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
@@ -23,7 +29,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    # we want a clean database before every test
+    # clean database before every test
     UrlShortener::Link.all.map(&:destroy)
   end
 

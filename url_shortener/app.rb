@@ -34,7 +34,7 @@ module UrlShortener
 
     get '/:slug' do
       param :slug, String, required: true
-      result = Actions::Get.call(params['slug'])
+      result = Actions::Get.new(params['slug']).call
       if result
         redirect result.url, 301
       else

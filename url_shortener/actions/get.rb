@@ -5,8 +5,12 @@ require './url_shortener/models/link'
 module UrlShortener
   module Actions
     class Get
-      def self.call(slug)
-        Link.by_slug(keys: [slug]).first
+      def initialize(slug)
+        @slug = slug
+      end
+
+      def call
+        Link.find_by_both_slugs(@slug)
       end
     end # class Shorten
   end # module Actions
