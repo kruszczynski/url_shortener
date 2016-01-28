@@ -12,7 +12,7 @@ module UrlShortener
                         slug: SlugGenerator.generate(slug_number),
                         slug_number: slug_number)
         link.save
-        link.custom_slug || link.slug
+        link.returnable_slug
       end
     end # class Shorten
   end # module Actions

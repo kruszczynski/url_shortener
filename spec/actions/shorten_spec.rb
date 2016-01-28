@@ -10,10 +10,10 @@ module UrlShortener
     let(:custom_slug) { 'marketing_is_great' }
     let(:slug) { 'W44' }
     let(:slug_number) { 145_336 }
-    let(:params) do
+    let(:link_params) do
       {url: url, custom_slug: custom_slug, slug: slug, slug_number: slug_number}
     end
-    let(:link) { double('Link', params) }
+    let(:link) { double('Link', link_params) }
 
     describe '.call' do
       it 'returns slug' do
@@ -21,9 +21,10 @@ module UrlShortener
         expect(SlugGenerator).to receive(:generate).with(slug_number) { slug }
         expect(Link)
           .to receive(:new)
-          .with(params)
+          .with(link_params)
           .and_return(link)
         expect(link).to receive(:save)
+        expect(link).to receive(:returnable_slug) { custom_slug }
         expect(subject).to eq(custom_slug)
       end
     end
