@@ -49,6 +49,13 @@ module UrlShortener
         expect(SlugGenerator).to_not receive(:generate)
         expect(subject.call).to be_falsey
       end
+
+      it 'returns early if url is invalid' do
+        expect(subject).to receive(:slug_available?) { true }
+        expect(subject).to receive(:url_invalid?) { true }
+        expect(SlugGenerator).to_not receive(:generate)
+        expect(subject.call).to be_falsey
+      end
     end
 
     describe '#slug_available?' do
@@ -60,6 +67,23 @@ module UrlShortener
       it 'returns false' do
         expect(Link).to receive(:find_by_both_slugs).and_return(double('Link'))
         expect(subject.slug_available?).to be_falsey
+        expect(subject.message).to eq(
+          "Redirect not created, slug #{custom_slug} taken")
+      end
+    end
+
+    describe '#url_invalid?' do
+      it 'returns true' do
+        expect(subject.url_invalid?).to be_falsey
+      end
+
+      context 'with invalid url' do
+        let(:url) { 'www.water.com' }
+        it 'returns false' do
+          expect(subject.url_invalid?).to be_truthy
+          expect(subject.message).to eq(
+            'Redirect not created, url has to start with http or https')
+        end
       end
     end
   end # describe UrlShortener::Actions::Shorten

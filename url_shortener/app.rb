@@ -32,13 +32,13 @@ module UrlShortener
     post '/shorten' do
       param :url, String, required: true
       param :slug, String
-      link = Actions::Shorten.new(params['url'], params['slug']).call
+      action = Actions::Shorten.new(params['url'], params['slug'])
+      link = action.call
       if link
         json url: "#{ENV['ROOT_URL']}/#{link.returnable_slug}",
              target: params['url']
       else
-        halt 422, json(errors:
-          ["Redirect not created, slug #{params[:slug]} taken"])
+        halt 422, json(error: action.message)
       end
     end
   end # class App

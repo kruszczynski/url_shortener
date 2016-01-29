@@ -122,11 +122,7 @@ module UrlShortener
 
         it_behaves_like 'link_creator', 'party'
 
-        context 'with slug taken' do
-          before do
-            Actions::Shorten.new(url, custom_slug).call
-          end
-
+        shared_examples_for 'error_response' do |error_message|
           it 'does not create a link' do
             expect { post '/shorten', params }
               .to_not change { Link.count }
@@ -139,9 +135,25 @@ module UrlShortener
 
           it 'returns error message' do
             post '/shorten', params
-            expect(JSON.parse(last_response.body)['errors'])
-              .to eq(["Redirect not created, slug #{custom_slug} taken"])
+            expect(JSON.parse(last_response.body)['error'])
+              .to eq(error_message)
           end
+        end
+
+        context 'with slug taken' do
+          before do
+            Actions::Shorten.new(url, custom_slug).call
+          end
+
+          it_behaves_like 'error_response',
+                          'Redirect not created, slug party taken'
+        end
+
+        context 'with invalid url' do
+          let(:url) { 'www.youtube.com' }
+
+          it_behaves_like 'error_response', 'Redirect not created, url has to '\
+                                            'start with http or https'
         end
       end
     end # describe 'POST to /shorten'
