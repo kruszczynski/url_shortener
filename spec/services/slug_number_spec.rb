@@ -8,7 +8,7 @@ module UrlShortener
   describe SlugNumber do
     subject { SlugNumber.instance }
 
-    context 'counter' do
+    describe 'counter' do
       it 'starts with 80' do
         expect(subject.counter).to eq(80)
       end
@@ -20,9 +20,17 @@ module UrlShortener
       end
     end
 
-    context '#latest' do
+    describe '#latest' do
       it 'returns 81' do
         expect(subject.latest).to eq(81)
+      end
+
+      context 'with unsynced data' do
+        before { SlugNumber.instance.instance_variable_set(:@counter, 70) }
+
+        it 'still returns 81' do
+          expect(subject.latest).to eq(81)
+        end
       end
     end
   end # describe EtcdClient

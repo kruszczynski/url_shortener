@@ -17,14 +17,16 @@ module UrlShortener
     end
 
     def start
-      @counter = @client.get(counter_key).value.to_i
+      update_counter
       Thread.new { watch }
     end
 
     def latest
-      @client.test_and_set(
-        counter_key, value: counter + 1, prevValue: counter)
-      counter
+      @counter = @client.test_and_set(
+        counter_key, value: counter + 1, prevValue: counter).value.to_i
+    rescue Etcd::TestFailed
+      update_counter
+      latest
     end
 
     private
@@ -42,6 +44,10 @@ module UrlShortener
           puts error
         end
       end
+    end
+
+    def update_counter
+      @counter = @client.get(counter_key).value.to_i
     end
   end # class SlugNumber
 end # module UrlShortener
