@@ -17,6 +17,7 @@ module UrlShortener
         @custom_slug = custom_slug
       end
 
+      # this method smells of :reek:TooManyStatements
       def call
         return false unless slug_available?
         return false if url_invalid?

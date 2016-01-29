@@ -20,6 +20,7 @@ module UrlShortener
       base_80_array(number).map { |element| URL_CHARACTERS[element] }.join('')
     end
 
+    # reek reports this method as unused unfortunately
     def self.base_80_array(number)
       return [0] if number == 0
       [].tap do |array|

@@ -37,6 +37,7 @@ module UrlShortener
 
     private
 
+    # this method smells of :reek:UtilityFunction
     def counter_key
       "/url_shortener/#{App.environment}/counter1"
     end
