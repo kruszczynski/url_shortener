@@ -18,6 +18,7 @@ module UrlShortener
       @logger ||= Logger.new(output)
     end
 
+    # this method smells of :reek:UtilityFunction
     def output
       App.settings.log_output
     end
