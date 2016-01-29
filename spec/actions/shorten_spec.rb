@@ -10,8 +10,8 @@ module UrlShortener
 
     let(:url) { 'https://www.shopify.com' }
     let(:custom_slug) { 'marketing_is_great' }
-    let(:slug) { 'W44' }
-    let(:slug_number) { 145_336 }
+    let(:slug) { 'BB' }
+    let(:slug_number) { 81 }
     let(:link_params) do
       {url: url, custom_slug: custom_slug, slug: slug, slug_number: slug_number}
     end
@@ -20,8 +20,6 @@ module UrlShortener
     describe '#call' do
       it 'returns slug when successful' do
         expect(subject).to receive(:slug_available?) { true }
-        expect(SlugNumber.instance).to receive(:latest) { slug_number }
-        expect(SlugGenerator).to receive(:generate).with(slug_number) { slug }
         expect(Link)
           .to receive(:new)
           .with(link_params)
@@ -33,8 +31,6 @@ module UrlShortener
 
       it 'returns false when not' do
         expect(subject).to receive(:slug_available?) { true }
-        expect(SlugNumber.instance).to receive(:latest) { slug_number }
-        expect(SlugGenerator).to receive(:generate).with(slug_number) { slug }
         expect(Link)
           .to receive(:new)
           .with(link_params)
@@ -46,14 +42,12 @@ module UrlShortener
 
       it 'returns early if slug is taken' do
         expect(subject).to receive(:slug_available?) { false }
-        expect(SlugGenerator).to_not receive(:generate)
         expect(subject.call).to be_falsey
       end
 
       it 'returns early if url is invalid' do
         expect(subject).to receive(:slug_available?) { true }
         expect(subject).to receive(:url_invalid?) { true }
-        expect(SlugGenerator).to_not receive(:generate)
         expect(subject.call).to be_falsey
       end
     end

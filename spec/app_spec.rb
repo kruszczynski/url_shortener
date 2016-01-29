@@ -78,10 +78,6 @@ module UrlShortener
 
     describe 'POST to /shorten' do
       shared_examples_for 'link_creator' do |expected_slug|
-        before do
-          allow(SlugNumber.instance).to receive(:latest) { 80 }
-        end
-
         it 'adds a link to storage' do
           expect { shorten_request }.to change { Link.count }.by(1)
         end
@@ -113,7 +109,18 @@ module UrlShortener
       context 'auto generated slug' do
         let(:params) { {url: 'https://www.youtube.com'} }
 
-        it_behaves_like 'link_creator', 'BA'
+        it_behaves_like 'link_creator', 'BB'
+
+        context 'with prior custom slug colliding with auto slug' do
+          before do
+            Link.new(url: 'https://bit.ly',
+                     slug: '=',
+                     slug_number: 79,
+                     custom_slug: 'BA').save
+          end
+
+          it_behaves_like 'link_creator', 'BB'
+        end
       end
 
       context 'custom slugs' do
