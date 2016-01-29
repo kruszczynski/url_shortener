@@ -4,7 +4,36 @@ A simple API for url shortening
 
 ### API
 
-Api will go here
+#### POST /shorten
+The main endpoint of the app. Can be used be a developer to provide url
+shortening.
+
+##### Parameters:
+- **url** - required, has to be prepended with http:// or https://
+- **slug** - optional, a custom slug for shortened link. A generated one will be provided
+
+##### Response:
+- **url** the shortened url
+- **target** the redirection target
+
+##### Examples:
+- `POST localhost:3000/shorten?url=https://www.twitter.com` will return
+`{url: http://localhost:3000/Bxd, target: https://www.twitter.com}`
+- `POST localhost:3000/shorten?url=https://www.twitter.com&slug=promotion`
+will return `{url: http://localhost:3000/promotion, target:
+https://www.twitter.com}`
+- consecutive `POST
+localhost:3000/shorten?url=https://www.facebook.com&slug=promotion` will return
+status 422 and an error message
+
+#### GET /:slug
+The shortened url redirection endpoint.
+
+##### Parameters:
+- **slug** - required, a slug provided by /shorten
+
+##### Response:
+- a 301 redirect to target's url
 
 ### Development setup
 
@@ -19,7 +48,7 @@ Api will go here
 
 Make sure port 3000 is being forwarded from docker machine to your machine.
 
-#####  About development setup
+###  About development setup
 I've been using docker for development for a while now so it was an obvious
 choice.
 
