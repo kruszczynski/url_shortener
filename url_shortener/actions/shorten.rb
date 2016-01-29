@@ -13,7 +13,7 @@ module UrlShortener
       end
 
       def call
-        slug_number = SlugNumber.latest
+        slug_number = SlugNumber.instance.latest
         link = Link.new(url: @url,
                         custom_slug: @custom_slug,
                         slug: SlugGenerator.generate(slug_number),

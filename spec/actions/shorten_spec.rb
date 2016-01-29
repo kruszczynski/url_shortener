@@ -19,7 +19,7 @@ module UrlShortener
 
     describe '#call' do
       it 'returns slug when successful' do
-        expect(SlugNumber).to receive(:latest) { slug_number }
+        expect(SlugNumber.instance).to receive(:latest) { slug_number }
         expect(SlugGenerator).to receive(:generate).with(slug_number) { slug }
         expect(Link)
           .to receive(:new)
@@ -31,7 +31,7 @@ module UrlShortener
       end
 
       it 'returns false when not' do
-        expect(SlugNumber).to receive(:latest) { slug_number }
+        expect(SlugNumber.instance).to receive(:latest) { slug_number }
         expect(SlugGenerator).to receive(:generate).with(slug_number) { slug }
         expect(Link)
           .to receive(:new)

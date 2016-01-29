@@ -79,7 +79,7 @@ module UrlShortener
     describe 'POST to /shorten' do
       shared_examples_for 'link_creator' do |expected_slug|
         before do
-          allow(SlugNumber).to receive(:latest) { 80 }
+          allow(SlugNumber.instance).to receive(:latest) { 80 }
         end
 
         it 'adds a link to storage' do

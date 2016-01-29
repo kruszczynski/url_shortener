@@ -3,6 +3,7 @@ web:
   command: bundle exec rackup --host 0.0.0.0 -p 3000
   links:
     - db
+    - etcd
   volumes:
     - .:/usr/src/app
   volumes_from:
@@ -12,6 +13,14 @@ web:
 
 db:
   image: klaemo/couchdb
+
+etcd:
+  image: elcolio/etcd
+  command: -advertise-client-urls=http://0.0.0.0:2379 -listen-client-urls=http://0.0.0.0:2379
+  volumes:
+    - ./etcd-data:/data
+  ports:
+    - "2379:2379"
 
 bundle:
   image: busybox

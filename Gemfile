@@ -10,6 +10,8 @@ gem 'sinatra-param', require: 'sinatra/param'
 gem 'activemodel', '4.1.14.1'
 gem 'couchrest_model'
 
+gem 'etcd'
+
 group :development, :test do
   gem 'rspec'
   gem 'rack-test'
