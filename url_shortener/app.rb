@@ -17,6 +17,8 @@ module UrlShortener
 
     configure do
       enable :logging
+
+      set :log_output, ::File.new("./log/#{environment}.log", 'a+')
     end
 
     # GET /:slug

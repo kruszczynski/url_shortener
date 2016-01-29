@@ -34,6 +34,8 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.order = :random
+
   config.before(:each) do
     # clean database before every test
     UrlShortener::Link.all.map(&:destroy)
@@ -45,6 +47,4 @@ RSpec.configure do |config|
     # start etcd watch
     UrlShortener::SlugNumber.instance.start
   end
-
-  config.order = :random
 end

@@ -71,3 +71,4 @@ cluster. My motivation was to make this system distributed-friendly and to keep 
 ### Potential improvements
 - Statistics gathering
 - Non-incremental slugs
+- Reusing slugs for links that are already shortened

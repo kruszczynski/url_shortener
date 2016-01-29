@@ -4,6 +4,7 @@ require 'singleton'
 require 'etcd'
 
 require './url_shortener/app'
+require './url_shortener/services/shared_logger'
 
 module UrlShortener
   # SlugNumber connects to etcd cluster to synchronise slug counter.
@@ -14,6 +15,7 @@ module UrlShortener
 
   class SlugNumber
     include Singleton
+    include SharedLogger
 
     attr_reader :counter
 
@@ -31,6 +33,7 @@ module UrlShortener
       @counter = @client.test_and_set(
         counter_key, value: counter + 1, prevValue: counter).value.to_i
     rescue Etcd::TestFailed
+      log_info "Etcd::TestFailed for counter: #{counter}"
       update_counter
       latest
     end
@@ -47,8 +50,7 @@ module UrlShortener
         begin
           @counter = Integer(@client.watch(counter_key).value.to_i)
         rescue Etcd::Error => error
-          # here logging should take place
-          puts error
+          log_info error
         end
       end
     end
