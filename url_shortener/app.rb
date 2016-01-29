@@ -36,7 +36,7 @@ module UrlShortener
       if link
         json slug: link.returnable_slug
       else
-        halt 422, json('Redirect not created, custom_slug taken')
+        halt 422, json('Redirect not created, slug taken')
       end
     end
   end # class App

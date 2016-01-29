@@ -13,6 +13,7 @@ module UrlShortener
       end
 
       def call
+        return false unless slug_available?
         slug_number = SlugNumber.instance.latest
         link = Link.new(url: @url,
                         custom_slug: @custom_slug,
@@ -20,6 +21,10 @@ module UrlShortener
                         slug_number: slug_number)
         link.save
         link.persisted? && link
+      end
+
+      def slug_available?
+        !Link.find_by_both_slugs(@custom_slug)
       end
     end # class Shorten
   end # module Actions
