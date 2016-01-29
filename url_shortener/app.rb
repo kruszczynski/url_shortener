@@ -19,6 +19,9 @@ module UrlShortener
       enable :logging
     end
 
+    # GET /:slug
+    #
+    # The redirecting part of url shortening. :slug has to exist in database
     get '/:slug' do
       param :slug, String, required: true
       result = Actions::Get.new(params['slug']).call
@@ -29,6 +32,10 @@ module UrlShortener
       end
     end
 
+    # POST  /shorten?url=http://example.com
+    # POST  /shorten?url=http://example.com&slug=example
+    #
+    # Shortened link creation endpoint
     post '/shorten' do
       param :url, String, required: true
       param :slug, String

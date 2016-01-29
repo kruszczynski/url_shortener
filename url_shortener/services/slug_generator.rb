@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module UrlShortener
+  # SlugGenerator uses 80 legal URL characters to generate
+  # a slug from a number. It converts the number to base 80
+  # and represents it using given characters
+
   class SlugGenerator
     # Yes, it's 10 chars per row
     URL_CHARACTERS = 'ABCDEFGHIJ'\

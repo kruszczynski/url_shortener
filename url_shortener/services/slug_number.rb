@@ -6,6 +6,12 @@ require 'etcd'
 require './url_shortener/app'
 
 module UrlShortener
+  # SlugNumber connects to etcd cluster to synchronise slug counter.
+  # In case of collision it will ask Etcd for latest number and re-attempt
+  # incrementation. Etcd guarantees atomicity of the counter
+  #
+  # Uniqueness is important because based on the counter we generate the slug
+
   class SlugNumber
     include Singleton
 

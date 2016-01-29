@@ -67,3 +67,7 @@ cluster. My motivation was to make this system distributed-friendly and to keep 
 1. `docker-compose run --rm web bundle exec rspec`
 2. `docker-compose run --rm web bundle exec rubocop`
 3. `docker-compose run --rm web bundle exec reek`
+
+### Potential improvements
+- Statistics gathering
+- Non-incremental slugs

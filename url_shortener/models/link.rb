@@ -3,6 +3,9 @@
 require 'couchrest_model'
 
 module UrlShortener
+  # Link is model-like representation of database documents
+  # that contain all data necessary to execute the redirect
+
   class Link < CouchRest::Model::Base
     property :url, String
     property :slug_number, Integer

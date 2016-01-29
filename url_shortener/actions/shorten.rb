@@ -6,6 +6,9 @@ require './url_shortener/services/slug_number'
 
 module UrlShortener
   module Actions
+    # Shorten is a controller-like abstraction of all steps
+    # necessary to create a Link based on request's parameters
+
     class Shorten
       attr_reader :message
 
