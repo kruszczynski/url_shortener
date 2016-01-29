@@ -24,6 +24,8 @@ RSpec.configure do |config|
     couchrest_config.environment = :test
   end
 
+  ENV['ROOT_URL'] = 'http://test.host'
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

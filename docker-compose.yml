@@ -10,6 +10,8 @@ web:
     - bundle
   ports:
     - "3000:3000"
+  environment:
+    - ROOT_URL=localhost:3000
 
 db:
   image: klaemo/couchdb

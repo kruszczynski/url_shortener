@@ -83,14 +83,29 @@ module UrlShortener
         end
 
         it 'adds a link to storage' do
-          expect { post '/shorten', params }
-            .to change { Link.count }.by(1)
+          expect { shorten_request }.to change { Link.count }.by(1)
         end
 
-        it 'returns a json with slug' do
-          post '/shorten', params
+        it 'is a successful response' do
+          shorten_request
           expect(last_response.status).to eq(200)
-          expect(JSON.parse(last_response.body)['slug']).to eq expected_slug
+        end
+
+        context 'json response' do
+          let(:parsed_json) { JSON.parse(last_response.body) }
+          before { shorten_request }
+
+          it 'returns redirect target' do
+            expect(parsed_json['target']).to eq(params[:url])
+          end
+
+          it 'returns shortened link' do
+            expect(parsed_json['url']).to eq("http://test.host/#{expected_slug}")
+          end
+        end
+
+        def shorten_request
+          post '/shorten', params
         end
       end # shared_examples_for 'link_creator'
 
@@ -120,6 +135,12 @@ module UrlShortener
           it 'returns status 422' do
             post '/shorten', params
             expect(last_response.status).to eq(422)
+          end
+
+          it 'returns error message' do
+            post '/shorten', params
+            expect(JSON.parse(last_response.body)['errors'])
+              .to eq(["Redirect not created, slug #{custom_slug} taken"])
           end
         end
       end
