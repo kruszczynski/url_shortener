@@ -33,7 +33,7 @@ module UrlShortener
       end
 
       def url_invalid?
-        invalid = !(@url =~ /^(http:\/\/|https:\/\/)/)
+        invalid = !(@url =~ %r{^(http:\/\/|https:\/\/)})
         if invalid
           @message = 'Redirect not created, url has to start with http or https'
         end

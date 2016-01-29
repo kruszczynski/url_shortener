@@ -100,7 +100,8 @@ module UrlShortener
           end
 
           it 'returns shortened link' do
-            expect(parsed_json['url']).to eq("http://test.host/#{expected_slug}")
+            expect(parsed_json['url']).to eq(
+              "http://test.host/#{expected_slug}")
           end
         end
 
