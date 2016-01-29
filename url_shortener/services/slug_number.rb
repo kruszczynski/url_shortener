@@ -29,11 +29,13 @@ module UrlShortener
       Thread.new { watch }
     end
 
+    # atomically increments the counter in etcd
     def latest
       @counter = @client.test_and_set(
         counter_key, value: counter + 1, prevValue: counter).value.to_i
     rescue Etcd::TestFailed
       log_info "Etcd::TestFailed for counter: #{counter}"
+      # retry with latest data
       update_counter
       latest
     end
@@ -45,6 +47,8 @@ module UrlShortener
       "/url_shortener/#{App.environment}/counter1"
     end
 
+    # in a new thread this method is updated local value of the
+    # counter whenever ETCD changes
     def watch
       loop do
         begin

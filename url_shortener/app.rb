@@ -26,9 +26,9 @@ module UrlShortener
     # The redirecting part of url shortening. :slug has to exist in database
     get '/:slug' do
       param :slug, String, required: true
-      result = Actions::Get.new(params['slug']).call
-      if result
-        redirect result.url, 301
+      result_link = Actions::Get.new(params['slug']).call
+      if result_link
+        redirect result_link.url, 301
       else
         halt 404
       end

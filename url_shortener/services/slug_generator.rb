@@ -22,6 +22,8 @@ module UrlShortener
 
     # reek reports this method as unused (wrongly) and the warning
     # cannot be disabled by a comment. Likey a reek bug
+    #
+    # Converts base 10 number to array of numbers from 0 to 79
     def self.base_80_array(number)
       return [0] if number == 0
       [].tap do |array|
