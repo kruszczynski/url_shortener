@@ -19,7 +19,7 @@ module UrlShortener
 
     describe '#call' do
       it 'returns slug when successful' do
-        expect(subject).to receive(:slug_available?) { true }
+        expect(subject).to receive(:custom_slug_available?) { true }
         expect(Link)
           .to receive(:new)
           .with(link_params)
@@ -30,7 +30,7 @@ module UrlShortener
       end
 
       it 'returns false when not' do
-        expect(subject).to receive(:slug_available?) { true }
+        expect(subject).to receive(:custom_slug_available?) { true }
         expect(Link)
           .to receive(:new)
           .with(link_params)
@@ -41,30 +41,30 @@ module UrlShortener
       end
 
       it 'returns early if slug is taken' do
-        expect(subject).to receive(:slug_available?) { false }
+        expect(subject).to receive(:custom_slug_available?) { false }
         expect(subject.call).to be_falsey
       end
 
       it 'returns early if url is invalid' do
-        expect(subject).to receive(:slug_available?) { true }
+        expect(subject).to receive(:custom_slug_available?) { true }
         expect(subject).to receive(:url_invalid?) { true }
         expect(subject.call).to be_falsey
       end
-    end
+    end # describe '#call'
 
-    describe '#slug_available?' do
+    describe '#custom_slug_available?' do
       it 'returns true' do
         expect(Link).to receive(:find_by_both_slugs)
-        expect(subject.slug_available?).to be_truthy
+        expect(subject.custom_slug_available?).to be_truthy
       end
 
       it 'returns false' do
         expect(Link).to receive(:find_by_both_slugs).and_return(double('Link'))
-        expect(subject.slug_available?).to be_falsey
+        expect(subject.custom_slug_available?).to be_falsey
         expect(subject.message).to eq(
           "Redirect not created, slug #{custom_slug} taken")
       end
-    end
+    end # describe '#custom_slug_available?'
 
     describe '#url_invalid?' do
       it 'returns true' do
@@ -79,6 +79,6 @@ module UrlShortener
             'Redirect not created, url has to start with http or https')
         end
       end
-    end
+    end # describe '#url_invalid?'
   end # describe UrlShortener::Actions::Shorten
 end # module UrlShortener

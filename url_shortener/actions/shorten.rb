@@ -19,7 +19,7 @@ module UrlShortener
 
       # this method smells of :reek:TooManyStatements
       def call
-        return false unless slug_available?
+        return false unless custom_slug_available?
         return false if url_invalid?
         generate_valid_slug_number
         link = Link.new(url: @url,
@@ -30,7 +30,7 @@ module UrlShortener
         link.persisted? && link
       end
 
-      def slug_available?
+      def custom_slug_available?
         available = !Link.find_by_both_slugs(@custom_slug)
         @message = slug_taken_message unless available
         available
