@@ -12,10 +12,12 @@ module UrlShortener
     class Shorten
       attr_reader :message
 
+      # codebeat:disable[LOC]
       def initialize(url, custom_slug = nil)
         @url = url
         @custom_slug = custom_slug
       end
+      # codebeat:enable[LOC]
 
       # this method smells of :reek:TooManyStatements
       def call
