@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-require './url_shortener/actions/get'
+require './lib/actions/get'
 
 module UrlShortener
   describe Actions::Get do

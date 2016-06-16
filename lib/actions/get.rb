@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './url_shortener/models/link'
+require './lib/models/link'
 
 module UrlShortener
   module Actions

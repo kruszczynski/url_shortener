@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-require './url_shortener/app'
+require './lib/app'
 
 module UrlShortener
   describe App do

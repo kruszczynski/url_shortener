@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require './url_shortener/models/link'
-require './url_shortener/services/slug_generator'
-require './url_shortener/services/slug_number'
+require './lib/models/link'
+require './lib/services/slug_generator'
+require './lib/services/slug_number'
 
 module UrlShortener
   module Actions

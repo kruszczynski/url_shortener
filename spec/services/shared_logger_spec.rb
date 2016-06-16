@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-require './url_shortener/services/shared_logger'
+require './lib/services/shared_logger'
 
 module UrlShortener
   describe SharedLogger do

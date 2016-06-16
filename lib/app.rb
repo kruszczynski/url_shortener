@@ -6,10 +6,10 @@ require 'sinatra/config_file'
 
 require 'sinatra/param'
 
-require './url_shortener/models/link'
+require './lib/models/link'
 
-require './url_shortener/actions/shorten'
-require './url_shortener/actions/get'
+require './lib/actions/shorten'
+require './lib/actions/get'
 
 module UrlShortener
   class App < Sinatra::Base

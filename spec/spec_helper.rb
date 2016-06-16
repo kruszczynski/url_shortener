@@ -9,9 +9,9 @@ ENV['RACK_ENV'] = 'test'
 require 'yaml'
 require 'rack/test'
 require 'rspec'
-require './url_shortener/models/link'
+require './lib/models/link'
 
-require './url_shortener/services/slug_number'
+require './lib/services/slug_number'
 
 # The `.rspec` file also contains a few flags that are not defaults but that
 # users commonly want.

@@ -3,8 +3,8 @@
 require 'singleton'
 require 'etcd'
 
-require './url_shortener/app'
-require './url_shortener/services/shared_logger'
+require './lib/app'
+require './lib/services/shared_logger'
 
 module UrlShortener
   # SlugNumber connects to etcd cluster to synchronise slug counter.

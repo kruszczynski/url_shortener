@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-require './url_shortener/services/slug_number'
+require './lib/services/slug_number'
 
 module UrlShortener
   describe SlugNumber do

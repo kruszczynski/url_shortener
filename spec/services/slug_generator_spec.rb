@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-require './url_shortener/services/slug_generator'
+require './lib/services/slug_generator'
 
 module UrlShortener
   describe SlugGenerator do

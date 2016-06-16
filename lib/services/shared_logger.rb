@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './url_shortener/app'
+require './lib/app'
 
 module UrlShortener
   # SharedLogger is a simple module to make logging
