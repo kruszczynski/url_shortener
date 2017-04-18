@@ -17,4 +17,5 @@ group :development, :test do
   gem 'rack-test'
   gem 'rubocop'
   gem 'reek'
+  gem 'factory_girl'
 end
